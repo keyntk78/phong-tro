@@ -1,14 +1,18 @@
 import React from 'react'
 import Header from './Header'
-import Navigation from './Navigation'
 import { Outlet } from 'react-router-dom'
+import { Search, Navigation } from './index'
 
 const Home = () => {
   return (
     <div className='h-full w-full'>
       <Header />
       <Navigation />
-      <div className='mx-auto mt-4 flex w-1100 flex-col items-center justify-start '>
+      <div className='mx-auto mt-4 flex w-1100 flex-col items-center justify-center'>
+        <Search />
+      </div>
+
+      <div className='mx-auto mt-4 flex max-w-1100 items-start justify-start pb-[100px]'>
         <Outlet />
       </div>
     </div>

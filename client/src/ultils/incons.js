@@ -1,7 +1,36 @@
-import { AiOutlinePlusCircle } from 'react-icons/ai'
+import {
+  AiOutlinePlusCircle,
+  AiOutlineHome,
+  AiFillStar,
+  AiOutlineStar,
+  AiFillHeart,
+  AiOutlineHeart,
+  AiOutlineDoubleRight,
+  AiOutlineDoubleLeft
+} from 'react-icons/ai'
+import { CiLocationOn } from 'react-icons/ci'
+import { BsChevronRight, BsFillBookmarkStarFill } from 'react-icons/bs'
+import { TbReportMoney } from 'react-icons/tb'
+import { FaCropAlt } from 'react-icons/fa'
+import { FiSearch } from 'react-icons/fi'
+import { GrStar } from 'react-icons/gr'
 
 const icons = {
-  AiOutlinePlusCircle
+  AiOutlineHome,
+  AiOutlinePlusCircle,
+  CiLocationOn,
+  BsChevronRight,
+  TbReportMoney,
+  FaCropAlt,
+  FiSearch,
+  AiFillStar,
+  AiOutlineStar,
+  AiFillHeart,
+  AiOutlineHeart,
+  GrStar,
+  BsFillBookmarkStarFill,
+  AiOutlineDoubleRight,
+  AiOutlineDoubleLeft
 }
 
 export default icons

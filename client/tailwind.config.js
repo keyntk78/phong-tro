@@ -13,7 +13,8 @@ module.exports = {
         secondary3: '#e8f0fe'
       },
       maxWidth: {
-        600: '600px'
+        600: '600px',
+        1100: '1100px'
       }
     }
   },

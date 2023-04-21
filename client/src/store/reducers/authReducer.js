@@ -1,10 +1,40 @@
+import actionType from '../actions/actionType'
+
 const initState = {
   isLoggedIn: false,
-  token: null
+  token: null,
+  msg: '',
+  update: false
 }
 
 const authReducer = (state = initState, action) => {
-  switch (action.Type) {
+  switch (action.type) {
+    case actionType.LOGIN_SUCCESS:
+    case actionType.REGISTER_SUCCESS:
+      return {
+        ...state,
+        isLoggedIn: true,
+        token: action.data,
+        msg: ''
+      }
+    case actionType.LOGIN_FAIL:
+    case actionType.REGISTER_FAIL:
+      return {
+        ...state,
+        isLoggedIn: false,
+        token: null,
+        msg: action.data,
+        update: true
+      }
+
+    case actionType.LOGOUT:
+      return {
+        ...state,
+        isLoggedIn: false,
+        token: null,
+        msg: ''
+      }
+
     default:
       return state
   }
