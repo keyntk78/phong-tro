@@ -1,8 +1,7 @@
-import * as services from '../services/category'
-
-export const getAllCategories = async (req, res) => {
+import { categoryService } from '../services'
+const getAllCategories = async (req, res) => {
   try {
-    const response = await services.getAllCategoriesService()
+    const response = await categoryService.getAllCategoriesService()
 
     res.status(200).json(response)
   } catch (error) {
@@ -11,4 +10,8 @@ export const getAllCategories = async (req, res) => {
       msg: 'Failed at category controller: ' + error
     })
   }
+}
+
+export default {
+  getAllCategories
 }

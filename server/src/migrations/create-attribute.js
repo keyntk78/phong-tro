@@ -9,13 +9,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       price: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       acreage: {
         type: Sequelize.STRING
       },
       published: {
-        type: Sequelize.STRING
+        type: Sequelize.DATE
       },
       hashtag: {
         type: Sequelize.STRING

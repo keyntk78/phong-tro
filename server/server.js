@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }))
 initRoutes(app)
 connectDb()
 
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 5000
 
 const listener = app.listen(port, () => {
   console.log(`Server is running on port ${listener.address().port}`)

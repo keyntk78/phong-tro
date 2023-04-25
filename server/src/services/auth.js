@@ -5,8 +5,7 @@ import { v4 } from 'uuid'
 require('dotenv').config()
 
 const hashPassword = (password) => bcrypt.hashSync(password, bcrypt.genSaltSync(12))
-
-export const registerService = ({ phone, password, name }) =>
+const registerService = ({ phone, password, name }) =>
   new Promise(async (resolve, reject) => {
     try {
       const response = await db.User.findOrCreate({
@@ -32,7 +31,7 @@ export const registerService = ({ phone, password, name }) =>
     }
   })
 
-export const loginService = ({ phone, password }) =>
+const loginService = ({ phone, password }) =>
   new Promise(async (resolve, reject) => {
     try {
       const response = await db.User.findOne({
@@ -55,3 +54,8 @@ export const loginService = ({ phone, password }) =>
       reject(error)
     }
   })
+
+export default {
+  registerService,
+  loginService
+}

@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { apiGetCategories } from '../../services/category'
-import { formatVietnameseToString } from '../../ultils/common/formatVietnameseToString'
+
+import { useDispatch, useSelector } from 'react-redux'
+import * as action from '../../store/actions'
 
 const Navigation = () => {
-  const [categories, setCategories] = useState([])
+  const dispatch = useDispatch()
+  const { categories } = useSelector((state) => state.app)
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      const reponese = await apiGetCategories()
-      if (reponese?.data.err === 0) {
-        setCategories(reponese.data.response)
-      }
-    }
-    fetchCategories()
+    dispatch(action.getCategories())
   }, [])
 
   return (
@@ -32,7 +28,7 @@ const Navigation = () => {
             return (
               <div key={item.code} className='flex h-full items-center justify-center'>
                 <NavLink
-                  to={`${formatVietnameseToString(item.value)}`}
+                  to={item.slug}
                   className={({ isActive }) =>
                     isActive ? `bg-secondary2 px-4 py-3 hover:bg-secondary2` : `px-4 py-3 hover:bg-secondary2`
                   }

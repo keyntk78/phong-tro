@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { createSearchParams, useNavigate } from 'react-router-dom'
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
 
 const notActive =
   'flex flex items-center justify-center  rounded-md bg-white w-[46px] h-[48px] shadow-md hover:bg-gray-200'
@@ -8,14 +8,28 @@ const active =
 
 const PaginationItem = ({ number, currentPage, setCurrentPage, icon }) => {
   const navigate = useNavigate()
+  const [paramSearch] = useSearchParams()
+  let entries = paramSearch.entries()
+
+  const append = (entries) => {
+    let params = []
+    paramSearch.append('page', +number)
+
+    for (let entry of entries) {
+      params.push(entry)
+    }
+    let a = []
+    params?.map((i) => (a = { ...a, [i[0]]: i[1] }))
+
+    return a
+  }
+
   const hanldeChangPage = () => {
     if (+number) {
       setCurrentPage(+number)
       navigate({
         pathname: '',
-        search: createSearchParams({
-          page: number
-        }).toString()
+        search: createSearchParams(append(entries)).toString()
       })
     }
   }

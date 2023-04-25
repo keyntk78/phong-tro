@@ -13,12 +13,26 @@ export const apiGetPosts = async () =>
     }
   })
 
-export const apiGetPaginationPosts = async (page) =>
+export const apiGetPaginationPosts = async (query) =>
   new Promise(async (resolve, reject) => {
     try {
       const response = await axiosConfig({
         method: 'get',
-        url: `/api/v1/post/limit?page=${page}`
+        url: `/api/v1/post/limit`,
+        params: query
+      })
+      resolve(response)
+    } catch (error) {
+      reject(error)
+    }
+  })
+
+export const apiGetNewPosts = async () =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await axiosConfig({
+        method: 'get',
+        url: '/api/v1/post/new-post'
       })
       resolve(response)
     } catch (error) {

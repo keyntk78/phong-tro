@@ -1,10 +1,10 @@
 import db from '../models'
 
 // Get all Categories
-export const getAllCategoriesService = () =>
+const getAllCategoriesService = () =>
   new Promise(async (resolve, reject) => {
     try {
-      const response = await db.Category.findAll({ raw: true, attributes: ['code', 'value'] })
+      const response = await db.Category.findAll({ raw: true, attributes: ['code', 'value', 'slug'] })
 
       resolve({
         err: response ? 0 : 1,
@@ -15,3 +15,5 @@ export const getAllCategoriesService = () =>
       reject(error)
     }
   })
+
+export default { getAllCategoriesService }

@@ -6,7 +6,8 @@ import {
   AiFillHeart,
   AiOutlineHeart,
   AiOutlineDoubleRight,
-  AiOutlineDoubleLeft
+  AiOutlineDoubleLeft,
+  AiOutlineRight
 } from 'react-icons/ai'
 import { CiLocationOn } from 'react-icons/ci'
 import { BsChevronRight, BsFillBookmarkStarFill } from 'react-icons/bs'
@@ -30,7 +31,8 @@ const icons = {
   GrStar,
   BsFillBookmarkStarFill,
   AiOutlineDoubleRight,
-  AiOutlineDoubleLeft
+  AiOutlineDoubleLeft,
+  AiOutlineRight
 }
 
 export default icons

@@ -2,18 +2,26 @@ import React, { useEffect, useState } from 'react'
 import { PaginationItem } from '../../components'
 import { useSelector } from 'react-redux'
 import icons from '../../ultils/incons'
+import { useSearchParams } from 'react-router-dom'
 
 const { AiOutlineDoubleRight, AiOutlineDoubleLeft } = icons
 
 const Pagination = ({ page }) => {
   const { count, posts } = useSelector((state) => state.posts)
   const [arrPages, setArrPage] = useState([])
-  const [currentPage, setCurrentPage] = useState(+page || 1)
+  const [currentPage, setCurrentPage] = useState(1)
   const [isHideEnd, setIsHideEnd] = useState(false)
   const [isHideStart, setIsHideStart] = useState(false)
+  const [searchParams] = useSearchParams()
 
   useEffect(() => {
-    let maxPage = Math.floor(count / posts.length)
+    let page = searchParams.get('page')
+    page && +page !== currentPage && setCurrentPage(+page)
+    !page && setCurrentPage(1)
+  }, [searchParams])
+
+  useEffect(() => {
+    let maxPage = Math.ceil(count / process.env.REACT_APP_LIMIT_POST)
     let end = currentPage + 1 > maxPage ? maxPage : currentPage + 1
     let start = currentPage - 1 <= 0 ? 1 : currentPage - 1
 
@@ -44,7 +52,7 @@ const Pagination = ({ page }) => {
         <PaginationItem
           icon={<AiOutlineDoubleRight />}
           setCurrentPage={setCurrentPage}
-          number={Math.floor(count / posts.length)}
+          number={Math.ceil(count / process.env.REACT_APP_LIMIT_POST)}
         />
       )}
     </div>

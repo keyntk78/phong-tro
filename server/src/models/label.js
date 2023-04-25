@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
   Label.init(
     {
       code: DataTypes.STRING,
-      value: DataTypes.STRING
+      value: DataTypes.STRING,
+      slug: DataTypes.STRING
     },
     {
       sequelize,

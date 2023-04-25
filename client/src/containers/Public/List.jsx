@@ -2,15 +2,24 @@ import React, { useEffect } from 'react'
 import { Button, Item } from '../../components/index'
 import { getPaginationPosts } from '../../store/actions/post'
 import { useDispatch, useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 
-const List = ({ page }) => {
+const List = () => {
   const dispatch = useDispatch()
   const { posts } = useSelector((state) => state.posts)
 
+  const [searchParams] = useSearchParams()
+
   useEffect(() => {
-    let offset = page ? +page - 1 : 0
-    dispatch(getPaginationPosts(offset))
-  }, [page])
+    let params = []
+    for (let entry of searchParams.entries()) {
+      params.push(entry)
+    }
+
+    let searchParamObject = []
+    params?.map((i) => (searchParamObject = { ...searchParamObject, [i[0]]: i[1] }))
+    dispatch(getPaginationPosts(searchParamObject))
+  }, [searchParams])
 
   return (
     <div className='col-span-8 rounded-md bg-white px-4 py-4 shadow-md'>
@@ -40,6 +49,7 @@ const List = ({ page }) => {
                 phone={item?.user?.phone}
                 star={+item?.star}
                 id={item?.id}
+                slug={item?.slug}
               />
             )
           })}

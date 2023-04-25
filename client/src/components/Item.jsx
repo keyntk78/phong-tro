@@ -2,13 +2,13 @@ import React, { memo, useState } from 'react'
 import icons from '../ultils/incons'
 import avatar from '../assets/images/avatar.png'
 import { Link } from 'react-router-dom'
-import { formatVietnameseToString } from '../ultils/common/formatVietnameseToString'
+import { convertPrice } from '../ultils/common/convertPrice'
 
 const { GrStar, BsFillBookmarkStarFill, AiOutlineHeart, AiFillHeart } = icons
 
-const Item = ({ images, title, price, acreage, address, description, name, zalo, phone, star, id }) => {
+const Item = ({ images, title, price, acreage, address, description, name, zalo, phone, star, id, slug }) => {
   const [isHoverHeart, setIsHoverHeart] = useState(false)
-  let slug = formatVietnameseToString(title).split('/').join('-')
+  // let slug = formatVietnameseToString(title).split('/').join('-')
   let coutStar = []
   for (let i = 0; i < star; i++) {
     if (star !== 0) {
@@ -51,8 +51,8 @@ const Item = ({ images, title, price, acreage, address, description, name, zalo,
             </div>
           </div>
           <div className='flex flex-wrap items-center justify-between pt-2'>
-            <span className='text-[15px] font-bold text-green-600'>{price}</span>
-            <span className='text-[15px]'>{acreage}</span>
+            <span className='text-[15px] font-bold text-green-600'>{convertPrice(price)}</span>
+            <span className='text-[15px]'>{acreage} m2</span>
             <span className='text-[15px]'>{`${address.split(',')[address.split(',').length - 2]}, ${
               address.split(',')[address.split(',').length - 1]
             } `}</span>

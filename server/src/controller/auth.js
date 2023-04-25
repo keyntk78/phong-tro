@@ -1,4 +1,4 @@
-import * as authService from '../services/auth'
+import { authService } from '../services'
 
 export const register = async (req, res) => {
   const { name, phone, password } = req.body
@@ -23,4 +23,9 @@ export const login = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ err: -1, msg: 'Fail at auth controller: ' + error })
   }
+}
+
+export default {
+  register,
+  login
 }

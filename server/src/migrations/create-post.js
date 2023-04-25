@@ -36,6 +36,15 @@ module.exports = {
       overviewId: {
         type: Sequelize.STRING
       },
+      slug: {
+        type: Sequelize.STRING
+      },
+      priceCode: {
+        type: Sequelize.STRING
+      },
+      areaCode: {
+        type: Sequelize.STRING
+      },
       imagesId: {
         type: Sequelize.STRING
       },
