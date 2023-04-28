@@ -10,7 +10,9 @@ module.exports = {
         primary: '#f5f5f5',
         secondary1: '#1653dd',
         secondary2: '#f73859',
-        secondary3: '#e8f0fe'
+        secondary3: '#e8f0fe',
+        'overlay-30': 'rgba(0,0,0,0.3)',
+        'overlay-70': 'rgba(0,0,0,0.7)'
       },
       maxWidth: {
         600: '600px',

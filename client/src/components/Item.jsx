@@ -1,12 +1,12 @@
 import React, { memo, useState } from 'react'
 import icons from '../ultils/incons'
-import avatar from '../assets/images/avatar.png'
+import avatarImg from '../assets/images/avatar.png'
 import { Link } from 'react-router-dom'
 import { convertPrice } from '../ultils/common/convertPrice'
 
 const { GrStar, BsFillBookmarkStarFill, AiOutlineHeart, AiFillHeart } = icons
 
-const Item = ({ images, title, price, acreage, address, description, name, zalo, phone, star, id, slug }) => {
+const Item = ({ images, title, price, acreage, address, description, name, zalo, phone, star, id, slug, avatar }) => {
   const [isHoverHeart, setIsHoverHeart] = useState(false)
   // let slug = formatVietnameseToString(title).split('/').join('-')
   let coutStar = []
@@ -60,7 +60,7 @@ const Item = ({ images, title, price, acreage, address, description, name, zalo,
           <p className='h-[80px] w-full overflow-hidden text-ellipsis  pt-2 text-[15px] text-gray-400'>{description}</p>
           <div className='flex flex-wrap items-center justify-between gap-2 pt-3'>
             <div className='flex items-center gap-1'>
-              <img src={avatar} alt='avatar' className='h-[30px] w-[30px] rounded-full ' /> {name}
+              <img src={avatar ? avatar : avatarImg} alt='avatar' className='h-[30px] w-[30px] rounded-full ' /> {name}
             </div>
             <div className='flex items-center gap-1'>
               <button

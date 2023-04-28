@@ -1,10 +1,10 @@
 import actionType from './actionType'
 
-import { apiLogin, apiRegister } from './../../services/auth'
+import * as service from './../../services'
 
 export const register = (payload) => async (dispatch) => {
   try {
-    const response = await apiRegister(payload)
+    const response = await service.apiRegister(payload)
 
     if (response?.data.err === 0) {
       dispatch({
@@ -27,7 +27,7 @@ export const register = (payload) => async (dispatch) => {
 
 export const login = (payload) => async (dispatch) => {
   try {
-    const response = await apiLogin(payload)
+    const response = await service.apiLogin(payload)
 
     if (response?.data.err === 0) {
       dispatch({

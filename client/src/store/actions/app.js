@@ -1,11 +1,10 @@
 import actionType from './actionType'
-import { apiGetCategories } from './../../services/category'
-import { apiGetPrices } from '../../services/price'
-import { apiGetAreas } from '../../services/area'
+
+import * as service from '../../services'
 
 export const getCategories = () => async (dispatch) => {
   try {
-    const response = await apiGetCategories()
+    const response = await service.apiGetCategories()
 
     if (response?.data.err === 0) {
       dispatch({
@@ -29,7 +28,7 @@ export const getCategories = () => async (dispatch) => {
 
 export const getPrices = () => async (dispatch) => {
   try {
-    const response = await apiGetPrices()
+    const response = await service.apiGetPrices()
 
     if (response?.data.err === 0) {
       dispatch({
@@ -53,7 +52,7 @@ export const getPrices = () => async (dispatch) => {
 
 export const getAreas = () => async (dispatch) => {
   try {
-    const response = await apiGetAreas()
+    const response = await service.apiGetAreas()
 
     if (response?.data.err === 0) {
       dispatch({
@@ -71,6 +70,30 @@ export const getAreas = () => async (dispatch) => {
     dispatch({
       type: actionType.GET_AREAS,
       areas: null
+    })
+  }
+}
+
+export const getProvinces = () => async (dispatch) => {
+  try {
+    const response = await service.apiGetProvinces()
+
+    if (response?.data.err === 0) {
+      dispatch({
+        type: actionType.GET_PROVINCES,
+        provinces: response.data.response
+      })
+    } else {
+      dispatch({
+        type: actionType.GET_PROVINCES,
+        msg: response.data.msg,
+        provinces: null
+      })
+    }
+  } catch (error) {
+    dispatch({
+      type: actionType.GET_PROVINCES,
+      provinces: null
     })
   }
 }

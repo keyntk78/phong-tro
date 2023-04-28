@@ -1,0 +1,7 @@
+export * from './area'
+export * from './auth'
+export * from './category'
+export * from './post'
+export * from './price'
+export * from './province'
+export * from './user'

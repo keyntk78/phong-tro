@@ -1,9 +1,9 @@
 import actionType from './actionType'
-import { apiGetPosts, apiGetPaginationPosts, apiGetNewPosts } from './../../services/post'
+import * as service from '../../services'
 
 export const getPosts = () => async (dispatch) => {
   try {
-    const response = await apiGetPosts()
+    const response = await service.apiGetPosts
 
     if (response?.data.err === 0) {
       dispatch({
@@ -26,7 +26,7 @@ export const getPosts = () => async (dispatch) => {
 
 export const getPaginationPosts = (query) => async (dispatch) => {
   try {
-    const response = await apiGetPaginationPosts(query)
+    const response = await service.apiGetPaginationPosts(query)
 
     if (response?.data.err === 0) {
       dispatch({
@@ -51,7 +51,7 @@ export const getPaginationPosts = (query) => async (dispatch) => {
 
 export const getNewPosts = () => async (dispatch) => {
   try {
-    const response = await apiGetNewPosts()
+    const response = await service.apiGetNewPosts()
 
     if (response?.data.err === 0) {
       dispatch({

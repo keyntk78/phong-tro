@@ -39,9 +39,7 @@ const Pagination = ({ page }) => {
 
   return (
     <div className='flex items-center justify-center gap-2'>
-      {!isHideStart && (
-        <PaginationItem icon={<AiOutlineDoubleLeft />} setCurrentPage={setCurrentPage} number={1} type='start' />
-      )}
+      {!isHideStart && <PaginationItem setCurrentPage={setCurrentPage} number={1} type='start' />}
       {!isHideStart && <PaginationItem setCurrentPage={setCurrentPage} number={'...'} />}
       {arrPages.length > 0 &&
         arrPages.map((item) => {

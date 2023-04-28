@@ -1,14 +1,12 @@
 import React, { memo } from 'react'
 import icons from '../ultils/incons'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import { createSearchParams, useLocation, useNavigate } from 'react-router-dom'
 
 const { AiOutlineRight } = icons
 
 const ItemSidebar = ({ content, title, isCol2, type }) => {
   const location = useLocation()
-  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleFilterPost = (code) => {

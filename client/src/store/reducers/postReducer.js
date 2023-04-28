@@ -11,7 +11,7 @@ const postReducer = (state = initState, action) => {
   switch (action.type) {
     case actionType.GET_POSTS:
     case actionType.GET_POSTS_PAGINATION:
-      return { ...state, posts: action.posts, msg: action.msg || '', count: action.count || 0 }
+      return { ...state, posts: action.posts || [], msg: action.msg || '', count: action.count || 0 }
     case actionType.GET_NEW_POSTS:
       return { ...state, newPosts: action.newPosts || [], msg: action.msg || '' }
     default:

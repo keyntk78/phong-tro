@@ -19,7 +19,7 @@ const RelatePost = () => {
           <ItemSmall
             key={item.id}
             title={item.title}
-            price={item.attribute.price}
+            price={item.attribute.priceNumber}
             image={JSON.parse(item?.images?.image)}
             id={item.id}
             slug={item.slug}
