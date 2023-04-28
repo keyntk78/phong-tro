@@ -1,13 +1,13 @@
 import db from '../models'
 
 // Get all Categories
-export const getAllPriceService = () =>
+export const getAllProvinceService = () =>
   new Promise(async (resolve, reject) => {
     try {
-      const response = await db.Price.findAll({
+      const response = await db.Province.findAll({
         raw: true,
-        order: [['order', 'ASC']],
-        attributes: ['code', 'value', 'min', 'max']
+        order: [['value', 'DESC']],
+        attributes: ['code', 'value']
       })
 
       resolve({
@@ -21,5 +21,5 @@ export const getAllPriceService = () =>
   })
 
 export default {
-  getAllPriceService
+  getAllProvinceService
 }

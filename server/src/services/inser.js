@@ -36,11 +36,25 @@ export const insertService = () =>
   new Promise(async (resolve, reject) => {
     let hashtag = 1000
     try {
+      const provinceCodes = []
+      const labelCodes = []
       dataBody.map((data) => {
         data.body.forEach(async (item) => {
           let postId = v4()
           let attributesId = v4()
-          let labelCode = generateCode(item?.header?.class?.classType)
+          let labelCode = generateCode(item?.header?.class?.classType).trim()
+          labelCodes?.every((item) => item?.code !== labelCode) &&
+            labelCodes.push({
+              code: labelCode,
+              value: item?.header?.class?.classType?.trim(),
+              slug: slugToString(item?.header?.class?.classType?.trim())
+            })
+          let provinceCode = generateCode(item?.header?.address?.split(',')?.slice(-1)[0]).trim()
+          provinceCodes?.every((item) => item?.code !== provinceCode) &&
+            provinceCodes.push({
+              code: provinceCode,
+              value: item?.header?.address?.split(',')?.slice(-1)[0].trim()
+            })
           let userId = v4()
           let overviewId = v4()
           let imagesId = v4()
@@ -48,7 +62,6 @@ export const insertService = () =>
           let price = getMoneyFromStringV3(item?.header?.attributes?.price)
           let slugPost = slugToString(item?.header?.title)
           let codeHastag = hashtag++
-          let slugLabel = slugToString(item?.header?.class?.classType)
           let currentArea = getNumberFromStringV2(item?.header?.attributes?.acreage)
 
           let priceCode = dataPrice.find((area) => area.max > price && area.min <= price)?.code
@@ -67,14 +80,15 @@ export const insertService = () =>
             overviewId: overviewId,
             imagesId: imagesId,
             slug: slugPost,
+            provinceCode,
             areaCode: areaCode,
             priceCode: priceCode
           })
 
           await db.Attribute.create({
             id: attributesId,
-            acreage: currentArea,
-            price: price,
+            areaNumber: currentArea,
+            priceNumber: price,
             published: date,
             hashtag: codeHastag
           })
@@ -82,15 +96,6 @@ export const insertService = () =>
           await db.Image.create({
             id: imagesId,
             image: JSON.stringify(item?.images)
-          })
-
-          await db.Label.findOrCreate({
-            where: { code: labelCode },
-            defaults: {
-              code: labelCode,
-              value: item?.header?.class?.classType,
-              slug: slugLabel
-            }
           })
 
           await db.Overview.create({
@@ -112,6 +117,14 @@ export const insertService = () =>
             zalo: item?.contact.content.find((i) => i.name === 'Zalo')?.content
           })
         })
+      })
+
+      // console.log(provinceCodes);
+      provinceCodes?.forEach(async (item) => {
+        await db.Province.create(item)
+      })
+      labelCodes?.forEach(async (item) => {
+        await db.Label.create(item)
       })
 
       resolve('Done')

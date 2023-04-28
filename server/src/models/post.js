@@ -28,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
       imagesId: DataTypes.STRING,
       slug: DataTypes.STRING,
       priceCode: DataTypes.STRING,
-      areaCode: DataTypes.STRING
+      areaCode: DataTypes.STRING,
+      provinceCode: DataTypes.STRING
     },
     {
       sequelize,

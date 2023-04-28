@@ -1,13 +1,15 @@
 import db from '../models'
 
-// Get all Categories
-export const getAllPriceService = () =>
+// Get Current
+export const getCurrentUserService = (id) =>
   new Promise(async (resolve, reject) => {
     try {
-      const response = await db.Price.findAll({
+      const response = await db.User.findOne({
+        where: { id },
         raw: true,
-        order: [['order', 'ASC']],
-        attributes: ['code', 'value', 'min', 'max']
+        attributes: {
+          exclude: ['password']
+        }
       })
 
       resolve({
@@ -21,5 +23,5 @@ export const getAllPriceService = () =>
   })
 
 export default {
-  getAllPriceService
+  getCurrentUserService
 }

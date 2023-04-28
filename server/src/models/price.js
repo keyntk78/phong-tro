@@ -16,7 +16,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       code: DataTypes.STRING,
       order: DataTypes.INTEGER,
-      value: DataTypes.STRING
+      value: DataTypes.STRING,
+      min: DataTypes.STRING,
+      max: DataTypes.STRING
     },
     {
       sequelize,

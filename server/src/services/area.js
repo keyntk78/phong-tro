@@ -4,7 +4,11 @@ import db from '../models'
 const getAllAreaService = () =>
   new Promise(async (resolve, reject) => {
     try {
-      const response = await db.Area.findAll({ raw: true, order: [['order', 'ASC']], attributes: ['code', 'value'] })
+      const response = await db.Area.findAll({
+        raw: true,
+        order: [['order', 'ASC']],
+        attributes: ['code', 'value', 'min', 'max']
+      })
 
       resolve({
         err: response ? 0 : 1,

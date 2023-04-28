@@ -1,4 +1,5 @@
 import db from '../models'
+const { Op, where } = require('sequelize')
 
 const getPostsService = () =>
   new Promise(async (resolve, reject) => {
@@ -8,8 +9,8 @@ const getPostsService = () =>
         nest: true,
         include: [
           { model: db.Image, as: 'images', attributes: ['image'] },
-          { model: db.Attribute, as: 'attribute', attributes: ['price', 'acreage', 'published', 'hashtag'] },
-          { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone'] }
+          { model: db.Attribute, as: 'attribute', attributes: ['priceNumber', 'areaNumber', 'published', 'hashtag'] },
+          { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone', 'avatar'] }
         ],
         attributes: ['id', 'title', 'star', 'address', 'description', 'slug']
       })
@@ -24,21 +25,35 @@ const getPostsService = () =>
     }
   })
 
-const getPostsPaginationService = (page, query) =>
+const getPostsPaginationService = (page, query, { priceNumber, areaNumber }) =>
   new Promise(async (resolve, reject) => {
     try {
       let offset = !page || +page <= 1 ? 0 : +page - 1
+
+      const queries = {}
+
+      if (priceNumber) queries.priceNumber = { [Op.between]: priceNumber }
+      if (areaNumber) queries.areaNumber = { [Op.between]: areaNumber }
+
       const response = await db.Post.findAndCountAll({
-        where: query,
+        where: {
+          ...query
+        },
         raw: true,
         nest: true,
         offset: offset * +process.env.LIMIT || 0,
         limit: +process.env.LIMIT,
         include: [
           { model: db.Image, as: 'images', attributes: ['image'] },
-          { model: db.Attribute, as: 'attribute', attributes: ['price', 'acreage', 'published', 'hashtag'] },
-          { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone'] }
+          {
+            model: db.Attribute,
+            as: 'attribute',
+            attributes: ['priceNumber', 'areaNumber', 'published', 'hashtag'],
+            where: queries
+          },
+          { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone', 'avatar'] }
         ],
+
         attributes: ['id', 'title', 'star', 'address', 'description', 'slug']
       })
 
@@ -62,8 +77,8 @@ const getNewPostsService = () =>
         limit: +process.env.LIMIT,
         include: [
           { model: db.Image, as: 'images', attributes: ['image'] },
-          { model: db.Attribute, as: 'attribute', attributes: ['price', 'acreage', 'published', 'hashtag'] },
-          { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone'] }
+          { model: db.Attribute, as: 'attribute', attributes: ['priceNumber', 'areaNumber', 'published', 'hashtag'] },
+          { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone', 'avatar'] }
         ],
         attributes: ['id', 'title', 'star', 'address', 'description', 'slug', 'createdAt']
       })
