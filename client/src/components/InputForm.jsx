@@ -4,7 +4,7 @@ const InputForm = ({ label, type, value, setValue, name, invalidFaileds, setInva
   return (
     <div>
       <label
-        htmlFor='phone'
+        htmlFor={name}
         className='text-sm
       '
       >
@@ -12,7 +12,7 @@ const InputForm = ({ label, type, value, setValue, name, invalidFaileds, setInva
       </label>
       <input
         type={type}
-        id='phone'
+        id={name}
         value={value}
         onChange={(e) => setValue((prev) => ({ ...prev, [name]: e.target.value }))}
         onFocus={() => setInvalidFaileds([])}

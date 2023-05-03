@@ -50,13 +50,13 @@ const Item = ({ images, title, price, acreage, address, description, name, zalo,
               <BsFillBookmarkStarFill size={25} className=' text-yellow-500' />
             </div>
           </div>
-          <div className='flex flex-wrap items-center justify-between pt-2'>
+          <div className='flex flex-wrap items-center justify-start gap-10 pt-2'>
             <span className='text-[15px] font-bold text-green-600'>{convertPrice(price)}</span>
             <span className='text-[15px]'>{acreage} m2</span>
-            <span className='text-[15px]'>{`${address.split(',')[address.split(',').length - 2]}, ${
-              address.split(',')[address.split(',').length - 1]
-            } `}</span>
           </div>
+          <span className='text-[15px]'>{`${address.split(',')[address.split(',').length - 2]}, ${
+            address.split(',')[address.split(',').length - 1]
+          } `}</span>
           <p className='h-[80px] w-full overflow-hidden text-ellipsis  pt-2 text-[15px] text-gray-400'>{description}</p>
           <div className='flex flex-wrap items-center justify-between gap-2 pt-3'>
             <div className='flex items-center gap-1'>

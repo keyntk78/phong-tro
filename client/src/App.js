@@ -1,10 +1,30 @@
+import React, { useEffect } from 'react'
+
 import { Routes, Route } from 'react-router-dom'
 import { Home, Homepage, Login, Rental, DetailPost, SearchPage } from './containers/Public'
+import { System, CreatePost, ManagePost } from './containers/System'
+import { useDispatch, useSelector } from 'react-redux'
+
 import { path } from './ultils/constant'
+import * as actions from './store/actions'
 
 function App() {
+  const dispatch = useDispatch()
+  const { isLoggedIn } = useSelector((state) => state.auth)
+  useEffect(() => {
+    dispatch(actions.getPrices())
+    dispatch(actions.getAreas())
+    dispatch(actions.getProvinces())
+  }, [])
+
+  useEffect(() => {
+    setTimeout(() => {
+      isLoggedIn && dispatch(actions.getCurrentUser())
+    }, 500)
+  }, [isLoggedIn])
+
   return (
-    <div className=' bg-primary'>
+    <div className=''>
       <Routes>
         <Route path={path.HOME} element={<Home />}>
           <Route path='' element={<Homepage />} />
@@ -16,6 +36,10 @@ function App() {
           <Route path={path.NHA_CHO_THUE} element={<Rental />} />
           <Route path={path.DETAIL_POST_TITLE_POSTID} element={<DetailPost />} />
           <Route path={path.SEARCH} element={<SearchPage />} />
+        </Route>
+        <Route path={path.SYSTEM} element={<System />}>
+          <Route path={path.CREATE_POST} element={<CreatePost />} />
+          <Route path={path.MANAGE_POST} element={<ManagePost />} />
         </Route>
       </Routes>
     </div>

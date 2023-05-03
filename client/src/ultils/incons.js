@@ -9,10 +9,18 @@ import {
   AiOutlineDoubleLeft,
   AiOutlineRight,
   AiOutlineDown,
-  AiOutlineLogin
+  AiOutlineLogin,
+  AiFillPhone,
+  AiFillDelete
 } from 'react-icons/ai'
 import { CiLocationOn } from 'react-icons/ci'
-import { BsChevronRight, BsFillBookmarkStarFill, BsFillPlusSquareFill, BsFillFileEarmarkPostFill } from 'react-icons/bs'
+import {
+  BsChevronRight,
+  BsFillCameraFill,
+  BsFillBookmarkStarFill,
+  BsFillPlusSquareFill,
+  BsFillFileEarmarkPostFill
+} from 'react-icons/bs'
 import { TbReportMoney } from 'react-icons/tb'
 import { FaCropAlt, FaUserAlt } from 'react-icons/fa'
 import { FiSearch } from 'react-icons/fi'
@@ -40,7 +48,10 @@ const icons = {
   BsFillPlusSquareFill,
   FaUserAlt,
   BsFillFileEarmarkPostFill,
-  AiOutlineLogin
+  AiOutlineLogin,
+  AiFillPhone,
+  BsFillCameraFill,
+  AiFillDelete
 }
 
 export default icons

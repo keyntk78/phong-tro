@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import * as actions from '../../store/actions/index'
 import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
+import validate from './../../ultils/common/validateField'
 
 const Login = () => {
   const location = useLocation()
@@ -37,47 +38,47 @@ const Login = () => {
 
   const handleSubmit = async () => {
     let finalPayload = isRegister ? payload : { phone: payload.phone, password: payload.password }
-    let invalid = validate(finalPayload)
+    let invalid = validate(finalPayload, setInvalidFaileds)
     if (invalid === 0) {
       isRegister ? dispatch(actions.register(payload)) : dispatch(actions.login(payload))
     }
   }
 
-  const validate = (payload) => {
-    let invalids = 0
-    let fields = Object.entries(payload)
-    fields.forEach((item) => {
-      if (item[1] === '') {
-        setInvalidFaileds((prev) => [...prev, { name: item[0], message: 'Bạn không được bỏ trống trường này' }])
+  // const validate = (payload) => {
+  //   let invalids = 0
+  //   let fields = Object.entries(payload)
+  //   fields.forEach((item) => {
+  //     if (item[1] === '') {
+  //       setInvalidFaileds((prev) => [...prev, { name: item[0], message: 'Bạn không được bỏ trống trường này' }])
 
-        invalids++
-      }
-    })
+  //       invalids++
+  //     }
+  //   })
 
-    fields.forEach((item) => {
-      switch (item[0]) {
-        case 'password':
-          if (item[1].length < 6) {
-            setInvalidFaileds((prev) => [...prev, { name: item[0], message: 'Mật khẩu phải có tối thiểu 6 ký tự' }])
+  //   fields.forEach((item) => {
+  //     switch (item[0]) {
+  //       case 'password':
+  //         if (item[1].length < 6) {
+  //           setInvalidFaileds((prev) => [...prev, { name: item[0], message: 'Mật khẩu phải có tối thiểu 6 ký tự' }])
 
-            invalids++
-          }
-          break
+  //           invalids++
+  //         }
+  //         break
 
-        case 'phone':
-          if (!+item[1]) {
-            setInvalidFaileds((prev) => [...prev, { name: item[0], message: 'Số điện thoại không hợp lệ' }])
-            invalids++
-          }
-          break
+  //       case 'phone':
+  //         if (!+item[1]) {
+  //           setInvalidFaileds((prev) => [...prev, { name: item[0], message: 'Số điện thoại không hợp lệ' }])
+  //           invalids++
+  //         }
+  //         break
 
-        default:
-          break
-      }
-    })
+  //       default:
+  //         break
+  //     }
+  //   })
 
-    return invalids
-  }
+  //   return invalids
+  // }
 
   return (
     <div className='flex w-full justify-center'>

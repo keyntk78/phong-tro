@@ -1,8 +1,8 @@
 import icons from './incons'
 
-const { BsFillPlusSquareFill, FaUserAlt, BsFillFileEarmarkPostFill } = icons
+const { BsFillPlusSquareFill, FaUserAlt, BsFillFileEarmarkPostFill, AiFillPhone } = icons
 
-const menuManage = [
+const menuSidebar = [
   {
     id: 1,
     text: 'Đăng tin cho thuê',
@@ -17,10 +17,16 @@ const menuManage = [
   },
   {
     id: 3,
-    text: 'Thông tin tài khoản',
+    text: 'Sữa Thông tin cá nhân',
     path: '/he-thong/sua-thong-tin-ca-nhan',
     icon: <FaUserAlt />
+  },
+  {
+    id: 4,
+    text: 'Liên hệ',
+    path: '/he-thong/lien-he',
+    icon: <AiFillPhone />
   }
 ]
 
-export default menuManage
+export default menuSidebar

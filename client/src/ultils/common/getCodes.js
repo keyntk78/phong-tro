@@ -14,10 +14,8 @@ export const getCode = (totals) => {
   }))
 }
 
-export const getCodes = (arrMinMax, totals) => {
+export const getCodes = (value, totals) => {
   const arrWithMinMax = getCode(totals)
-  return arrWithMinMax.filter(
-    (item) =>
-      (item.min >= arrMinMax[0] && item.min < arrMinMax[1]) || (item.max > arrMinMax[0] && item.max <= arrMinMax[1])
-  )
+
+  return arrWithMinMax.filter((item) => item.min <= value && item.max > value)
 }

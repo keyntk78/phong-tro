@@ -10,7 +10,7 @@ const Button = ({ text, textColor, bgColor, IsIcon, onClick, fullWidth }) => {
       onClick={onClick}
     >
       <span>{text}</span>
-      <span>{IsIcon && <IsIcon />}</span>
+      {IsIcon && <span>{<IsIcon />}</span>}
     </button>
   )
 }

@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Post.belongsTo(models.Image, { foreignKey: 'imagesId', targetKey: 'id', as: 'images' })
       Post.belongsTo(models.Attribute, { foreignKey: 'attributesId', targetKey: 'id', as: 'attribute' })
+      Post.belongsTo(models.Overview, { foreignKey: 'overviewId', targetKey: 'id', as: 'overview' })
       Post.belongsTo(models.User, { foreignKey: 'userId', targetKey: 'id', as: 'user' })
     }
   }

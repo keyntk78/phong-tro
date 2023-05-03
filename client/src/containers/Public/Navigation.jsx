@@ -28,7 +28,7 @@ const Navigation = () => {
             return (
               <div key={item.code} className='flex h-full items-center justify-center'>
                 <NavLink
-                  to={item.slug}
+                  to={`/${item.slug}`}
                   className={({ isActive }) =>
                     isActive ? `bg-secondary2 px-4 py-3 hover:bg-secondary2` : `px-4 py-3 hover:bg-secondary2`
                   }
