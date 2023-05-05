@@ -82,3 +82,45 @@ export const apiCreateNewPost = async (payload) =>
       reject(error)
     }
   })
+
+export const apiUpdatePost = async (payload) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await axiosConfig({
+        method: 'put',
+        url: '/api/v1/post/update-post',
+        data: payload
+      })
+      resolve(response)
+    } catch (error) {
+      reject(error)
+    }
+  })
+
+export const apiDeletePost = async (postId, attributeId, imageId, overviewId) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await axiosConfig({
+        method: 'delete',
+        url: '/api/v1/post/delete-post',
+        params: { postId, attributeId, imageId, overviewId }
+      })
+      resolve(response)
+    } catch (error) {
+      reject(error)
+    }
+  })
+
+export const apiGetPostById = async (postId) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await axiosConfig({
+        method: 'get',
+        url: '/api/v1/post/post-byid',
+        params: { id: postId }
+      })
+      resolve(response)
+    } catch (error) {
+      reject(error)
+    }
+  })

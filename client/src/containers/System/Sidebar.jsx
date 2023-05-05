@@ -5,6 +5,7 @@ import menuSidebar from '../../ultils/menuSidebar'
 import { NavLink } from 'react-router-dom'
 import icons from '../../ultils/incons'
 import * as actions from '../../store/actions'
+import { blogTobase64 } from '../../ultils/common/tobase64'
 
 const { AiOutlineLogin } = icons
 
@@ -20,7 +21,7 @@ const Sidebar = () => {
     <div className='col-span-2 min-h-screen bg-primary p-4'>
       <div className='flex gap-2'>
         <img
-          src={currentData?.avatar ? currentData?.avatar : avatar}
+          src={currentData?.avatar ? blogTobase64(currentData?.avatar) : avatar}
           alt='avatar'
           className='h-[50px] w-[50px] rounded-full'
         />

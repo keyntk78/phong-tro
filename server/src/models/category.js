@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Category.hasOne(models.Post, { foreignKey: 'categoryCode', as: 'category' })
     }
   }
   Category.init(

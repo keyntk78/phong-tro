@@ -3,6 +3,7 @@ import icons from '../ultils/incons'
 import avatarImg from '../assets/images/avatar.png'
 import { Link } from 'react-router-dom'
 import { convertPrice } from '../ultils/common/convertPrice'
+import { blogTobase64 } from '../ultils/common/tobase64'
 
 const { GrStar, BsFillBookmarkStarFill, AiOutlineHeart, AiFillHeart } = icons
 
@@ -54,13 +55,21 @@ const Item = ({ images, title, price, acreage, address, description, name, zalo,
             <span className='text-[15px] font-bold text-green-600'>{convertPrice(price)}</span>
             <span className='text-[15px]'>{acreage} m2</span>
           </div>
-          <span className='text-[15px]'>{`${address.split(',')[address.split(',').length - 2]}, ${
-            address.split(',')[address.split(',').length - 1]
-          } `}</span>
+          <span className='text-[15px]'>
+            Địa chỉ:
+            {` ${address.split(',')[address.split(',').length - 2]}, ${
+              address.split(',')[address.split(',').length - 1]
+            } `}
+          </span>
           <p className='h-[80px] w-full overflow-hidden text-ellipsis  pt-2 text-[15px] text-gray-400'>{description}</p>
           <div className='flex flex-wrap items-center justify-between gap-2 pt-3'>
             <div className='flex items-center gap-1'>
-              <img src={avatar ? avatar : avatarImg} alt='avatar' className='h-[30px] w-[30px] rounded-full ' /> {name}
+              <img
+                src={avatar ? blogTobase64(avatar) : avatarImg}
+                alt='avatar'
+                className='h-[30px] w-[30px] rounded-full '
+              />{' '}
+              {name}
             </div>
             <div className='flex items-center gap-1'>
               <button

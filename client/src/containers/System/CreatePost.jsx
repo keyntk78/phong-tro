@@ -10,17 +10,25 @@ import validate from '../../ultils/common/validateField'
 const { BsFillCameraFill, AiFillDelete } = icons
 
 const CreatePost = () => {
-  const [payload, setPayload] = useState({
-    categoryCode: '',
-    title: '',
-    priceNumber: 0,
-    areaNumber: 0,
-    images: '',
-    address: '',
-    description: '',
-    target: '',
-    province: '',
-    district: ''
+  // const { dataEdit } = useSelector((state) => state.posts)
+
+  const [clearValue, setClearValue] = useState(false)
+
+  const [payload, setPayload] = useState(() => {
+    const initData = {
+      categoryCode: '',
+      title: '',
+      priceNumber: 0,
+      areaNumber: 0,
+      images: '',
+      address: '',
+      description: '',
+      target: '',
+      province: '',
+      district: ''
+    }
+
+    return initData
   })
 
   const [imagePreview, setImaggePreview] = useState([])
@@ -75,8 +83,6 @@ const CreatePost = () => {
     }
 
     const result = validate(finalPayLoad, setInvaidFields)
-    console.log(invalidFields)
-    console.log(result)
 
     if (result === 0) {
       const respone = await apiCreateNewPost(finalPayLoad)
@@ -101,6 +107,8 @@ const CreatePost = () => {
             areaOverview: '',
             category: ''
           })
+          setClearValue(true)
+          setImaggePreview([])
         })
       } else {
         Swal.fire('Opps!', 'Thêm thất bại!', 'error')
@@ -113,7 +121,12 @@ const CreatePost = () => {
       <h1 className='border-b py-4 text-3xl font-medium'>Đăng tin mới</h1>
       <div className='grid grid-cols-12 gap-4'>
         <div className='col-span-8 flex flex-col gap-8 py-4'>
-          <AddressForm invalidFields={invalidFields} setInvaidFields={setInvaidFields} setPayload={setPayload} />
+          <AddressForm
+            invalidFields={invalidFields}
+            setInvaidFields={setInvaidFields}
+            setPayload={setPayload}
+            clearValue={clearValue}
+          />
           <OverviewForm
             invalidFields={invalidFields}
             setInvaidFields={setInvaidFields}

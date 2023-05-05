@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       Post.belongsTo(models.Image, { foreignKey: 'imagesId', targetKey: 'id', as: 'images' })
       Post.belongsTo(models.Attribute, { foreignKey: 'attributesId', targetKey: 'id', as: 'attribute' })
       Post.belongsTo(models.Overview, { foreignKey: 'overviewId', targetKey: 'id', as: 'overview' })
+      Post.belongsTo(models.Label, { foreignKey: 'labelCode', targetKey: 'code', as: 'label' })
+      Post.belongsTo(models.Category, { foreignKey: 'categoryCode', targetKey: 'code', as: 'category' })
+      Post.belongsTo(models.Province, { foreignKey: 'provinceCode', targetKey: 'code', as: 'province' })
+
       Post.belongsTo(models.User, { foreignKey: 'userId', targetKey: 'id', as: 'user' })
     }
   }

@@ -21,7 +21,7 @@ const OverviewForm = ({ payload, setPayload, invalidFields, setInvaidFields }) =
           name={'categoryCode'}
           options={categories}
           setValue={setPayload}
-          value={payload}
+          value={payload.categoryCode}
           invalidFields={invalidFields}
           setInvaidFields={setInvaidFields}
         />

@@ -97,3 +97,36 @@ export const getNewPosts = () => async (dispatch) => {
     })
   }
 }
+
+export const getDetailPost = (id) => async (dispatch) => {
+  try {
+    const response = await service.apiGetPostById(id)
+
+    if (response?.data.err === 0) {
+      dispatch({
+        type: actionType.DETAIL_POST,
+        postDetail: response.data.response
+      })
+    } else {
+      dispatch({
+        type: actionType.DETAIL_POST,
+        msg: response.data.msg,
+        postDetail: null
+      })
+    }
+  } catch (error) {
+    dispatch({
+      type: actionType.GET_NEW_POSTS,
+      postDetail: null
+    })
+  }
+}
+
+export const editData = (dataEdit) => ({
+  type: actionType.EDIT_DATA_POST,
+  dataEdit: dataEdit
+})
+
+export const resetEditData = () => ({
+  type: actionType.RESET_DATAEDIT_POST
+})

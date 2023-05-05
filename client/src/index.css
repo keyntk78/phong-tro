@@ -64,3 +64,18 @@ input[type='range']::-ms-thumb {
 input[type='range']::-ms-thumb:active {
   border: solid 1px rgb(144, 211, 255);
 }
+
+button.slick-arrow.slick-next {
+  right: 20px;
+  z-index: 10 !important;
+}
+
+button.slick-arrow.slick-prev {
+  left: 5px;
+  z-index: 10 !important;
+}
+
+button.slick-arrow:before {
+  color: #80ed00;
+  font-size: 35px;
+}

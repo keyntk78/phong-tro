@@ -25,6 +25,8 @@ import { TbReportMoney } from 'react-icons/tb'
 import { FaCropAlt, FaUserAlt } from 'react-icons/fa'
 import { FiSearch } from 'react-icons/fi'
 import { GrStar, GrLinkPrevious } from 'react-icons/gr'
+import { ImLocation2 } from 'react-icons/im'
+import { BiTime, BiHash } from 'react-icons/bi'
 
 const icons = {
   AiOutlineDown,
@@ -51,7 +53,10 @@ const icons = {
   AiOutlineLogin,
   AiFillPhone,
   BsFillCameraFill,
-  AiFillDelete
+  AiFillDelete,
+  ImLocation2,
+  BiTime,
+  BiHash
 }
 
 export default icons

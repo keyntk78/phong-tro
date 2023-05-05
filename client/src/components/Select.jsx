@@ -7,7 +7,7 @@ const Select = ({ label, options, value, setValue, type, name, invalidFields, se
         {label}
       </label>
       <select
-        defaultValue={value || ''}
+        value={value || ''}
         onChange={(e) => (!name ? setValue(e.target.value) : setValue((prev) => ({ ...prev, [name]: e.target.value })))}
         id='select-address'
         onFocus={() => setInvaidFields([])}

@@ -1,20 +1,20 @@
 import React from 'react'
 
-const InputSystem = ({ label, unit, value, setValue, name, small, invalidFields, setInvaidFields }) => {
+const InputSystem = ({ label, unit, value, setValue, name, small, invalidFields, setInvaidFields, flexRow }) => {
   return (
     <div>
-      <div className='flex flex-col gap-2'>
-        <label htmlFor='title' className='font-medium'>
+      <div className={`${flexRow ? 'grid grid-cols-10  gap-2' : 'flex flex-col gap-2'}`}>
+        <label htmlFor='title' className={`${flexRow ? 'col-span-2' : ''} font-medium`}>
           {label}
         </label>
-        <div className='flex items-center'>
+        <div className={`${flexRow ? 'col-span-8 w-full' : 'flex items-center'}`}>
           <input
-            value={value}
+            value={value || ''}
             onChange={(e) => setValue((prev) => ({ ...prev, [name]: e.target.value }))}
             onFocus={() => setInvaidFields([])}
             type='text'
             id='title'
-            className={`flex-auto ${
+            className={`w-full flex-auto  ${
               unit ? 'rounded-bl-md rounded-tl-md' : 'rounded-md'
             } border border-gray-300 px-1 py-2 outline-none`}
           />

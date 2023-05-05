@@ -2,7 +2,7 @@ import db from '../models'
 import { v4 } from 'uuid'
 import generateCode from '../ultis/generateCode'
 import { slugToString, getMoneyFromStringV3, getNumberFromStringV2 } from '../ultis/common'
-const { Op } = require('sequelize')
+const { Op, where } = require('sequelize')
 
 const getPostsService = () =>
   new Promise(async (resolve, reject) => {
@@ -56,6 +56,7 @@ const getPostsPaginationService = (page, query, { priceNumber, areaNumber }) =>
           },
           { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone', 'avatar'] }
         ],
+        order: [['updatedAt', 'DESC']],
 
         attributes: ['id', 'title', 'star', 'address', 'description', 'slug']
       })
@@ -80,6 +81,7 @@ const getNewPostsService = () =>
         limit: +process.env.LIMIT,
         include: [
           { model: db.Image, as: 'images', attributes: ['image'] },
+
           { model: db.Attribute, as: 'attribute', attributes: ['priceNumber', 'areaNumber', 'published', 'hashtag'] },
           { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone', 'avatar'] }
         ],
@@ -166,7 +168,7 @@ const createNewPostService = (body, userId) =>
         address: body.address || null,
         attributesId: attributesId,
         categoryCode: body.categoryCode,
-        description: JSON.stringify(body.description) || null,
+        description: body.description || null,
         userId: userId,
         overviewId: overviewId,
         imagesId: imagesId,
@@ -226,17 +228,14 @@ const getPostsPaginationAdminService = (page, query, userId) =>
           { model: db.Image, as: 'images', attributes: ['image'] },
           {
             model: db.Attribute,
-            as: 'attribute',
-            attributes: ['priceNumber', 'areaNumber', 'published', 'hashtag']
+            as: 'attribute'
           },
           {
             model: db.Overview,
             as: 'overview'
           },
           { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone', 'avatar'] }
-        ],
-
-        attributes: ['id', 'title', 'star', 'address', 'description', 'slug']
+        ]
       })
 
       resolve({
@@ -249,10 +248,188 @@ const getPostsPaginationAdminService = (page, query, userId) =>
     }
   })
 
+const updatePostService = ({ postId, attributeId, imageId, overviewId, ...body }) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      let slugPost = slugToString(body.title)
+
+      let labelCode = ''
+      let label = await db.Label.findOne({
+        raw: true,
+        where: {
+          value: body?.label
+        }
+      })
+      if (label) {
+        labelCode = label?.code
+      } else {
+        labelCode = generateCode(body.label)
+
+        await db.Label.create({
+          code: labelCode,
+          value: body?.label,
+          slug: slugToString(body?.label)
+        })
+      }
+
+      let provinceCode = ''
+      let province = await db.Province.findOne({
+        raw: true,
+        where: {
+          [Op.or]: [
+            { value: body?.province?.replace('Thành phố ', '') },
+            { value: body?.province?.replace('Tỉnh ', '') }
+          ]
+        }
+      })
+
+      if (province) {
+        provinceCode = province?.code
+      } else {
+        provinceCode = body?.province.includes('Thành phố')
+          ? generateCode(body?.province?.replace('Thành phố ', ''))
+          : generateCode(body?.province?.replace('Tỉnh ', ''))
+        await db.Province.create({
+          code: provinceCode,
+          value: body?.province.includes('Thành phố')
+            ? body?.province?.replace('Thành phố ', '')
+            : body?.province?.replace('Tỉnh ', '')
+        })
+      }
+
+      await db.Post.update(
+        {
+          title: body.title,
+          labelCode: labelCode,
+          address: body.address || null,
+          categoryCode: body.categoryCode,
+          description: body.description || null,
+          slug: slugPost,
+          provinceCode: provinceCode,
+          areaCode: body.areaCode,
+          priceCode: body.priceCode
+        },
+        {
+          where: {
+            id: postId
+          }
+        }
+      )
+
+      await db.Attribute.update(
+        {
+          areaNumber: +body.areaNumber,
+          priceNumber: +body.priceNumber
+        },
+        {
+          where: {
+            id: attributeId
+          }
+        }
+      )
+
+      await db.Image.update(
+        {
+          image: JSON.stringify(body.images)
+        },
+        {
+          where: {
+            id: imageId
+          }
+        }
+      )
+
+      let category = await db.Category.findOne({
+        raw: true,
+        where: {
+          code: body?.categoryCode
+        }
+      })
+      await db.Overview.update(
+        {
+          area: body?.areaOverview,
+          type: category.value,
+          target: body?.target
+        },
+        {
+          where: {
+            id: overviewId
+          }
+        }
+      )
+      resolve({
+        err: 0,
+        msg: 'Updated'
+      })
+    } catch (error) {
+      reject(error)
+    }
+  })
+
+const deletePostService = (postId, attributeId, imageId, overviewId) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      await db.Overview.destroy({ where: { id: overviewId } })
+      await db.Attribute.destroy({ where: { id: attributeId } })
+      await db.Image.destroy({ where: { id: imageId } })
+      await db.Post.destroy({ where: { id: postId } })
+
+      resolve({
+        err: 0,
+        msg: 'Deleted'
+      })
+    } catch (error) {
+      reject(error)
+    }
+  })
+
+const getPostByIdService = (id) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await db.Post.findAll({
+        where: {
+          id: id
+        },
+        raw: true,
+        nest: true,
+        include: [
+          { model: db.Image, as: 'images', attributes: ['image'] },
+          {
+            model: db.Attribute,
+            as: 'attribute'
+          },
+          {
+            model: db.Category,
+            as: 'category'
+          },
+          {
+            model: db.Province,
+            as: 'province'
+          },
+          {
+            model: db.Overview,
+            as: 'overview'
+          },
+          { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone', 'avatar'] }
+        ]
+      })
+
+      resolve({
+        err: resolve ? 0 : 1,
+        msg: resolve ? 'OK' : 'Getting post is failed',
+        response
+      })
+    } catch (error) {
+      reject(error)
+    }
+  })
 export default {
+  updatePostService,
   getPostsService,
   getPostsPaginationService,
   getNewPostsService,
   createNewPostService,
-  getPostsPaginationAdminService
+  getPostsPaginationAdminService,
+  deletePostService,
+  getPostByIdService
 }

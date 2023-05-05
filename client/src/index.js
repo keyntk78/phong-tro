@@ -1,6 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
+import '../node_modules/slick-carousel/slick/slick.css'
+import '../node_modules/slick-carousel/slick/slick-theme.css'
+
 import App from './App'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'

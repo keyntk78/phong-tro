@@ -4,6 +4,8 @@ import { getPaginationPosts } from '../../store/actions/post'
 import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import { Pagination } from './index'
+import moment from 'moment'
+import 'moment/locale/vi'
 
 const List = ({ categoryCode }) => {
   const dispatch = useDispatch()
@@ -38,7 +40,9 @@ const List = ({ categoryCode }) => {
       <div className='rounded-md bg-white px-4 py-4 shadow-md'>
         <div className='flex items-center justify-between'>
           <h3 className='text-xl font-semibold'>Danh sách tin đăng</h3>
-          <span className='text-[16px]'>Cập nhật: 00:25 20/04/2023</span>
+          <span className='text-[16px]'>
+            Cập nhật: {moment(Date.now()).format('LT')} {moment(Date.now()).format('L')}
+          </span>
         </div>
         <div className='my-2 flex items-center gap-2'>
           <span>Sắp xếp:</span>
@@ -56,14 +60,14 @@ const List = ({ categoryCode }) => {
                   price={item?.attribute?.priceNumber}
                   acreage={item?.attribute?.areaNumber}
                   address={item?.address}
-                  description={JSON.parse(item?.description)}
+                  description={item?.description}
                   name={item?.user?.name}
                   zalo={item?.user?.zalo}
                   phone={item?.user?.phone}
                   star={+item?.star}
                   id={item?.id}
                   slug={item?.slug}
-                  avatar={item?.avatar}
+                  avatar={item?.user?.avatar}
                 />
               )
             })
